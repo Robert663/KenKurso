@@ -1,8 +1,9 @@
 from django.contrib.auth.models import BaseUserManager
 from django.utils import timezone
 
+
 class CustomUserManager(BaseUserManager):
-    def _create_user(self, email, password, is_professor, is_coordination, **extra_fields):
+    def _create_user(self, email, password, is_staff, is_admin, **extra_fields):
         now = timezone.now()
         if not email:
             raise ValueError("email precisa ser passado")
@@ -11,8 +12,8 @@ class CustomUserManager(BaseUserManager):
 
         user = self.model(
             email=email,
-            is_coordination=is_coordination,
-            is_professor=is_professor,
+            is_admin=is_admin,
+            is_staff=is_staff,
             updated_at=now,
             **extra_fields
         )

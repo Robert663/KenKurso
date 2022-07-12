@@ -1,3 +1,9 @@
 from django.db import models
 
-# Create your models here.
+
+class Student(models.Model):
+    active = models.BooleanField(default=True)
+
+    user = models.OneToOneField('users.User', on_delete=models.CASCADE, primary_key=True)
+    course = models.OneToOneField('courses.Course', on_delete=models.CASCADE)
+    semester = models.OneToOneField('semesters.Semester', on_delete=models.CASCADE)
