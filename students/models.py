@@ -6,3 +6,4 @@ class Student(models.Model):
 
     user_id = models.OneToOneField('users.User', on_delete=models.CASCADE, primary_key=True)
     course_id = models.OneToOneField('courses.Course', on_delete=models.CASCADE, primary_key=True)
+    semester_id = models.OneToOneField('semesters.Semester', on_delete=models.CASCADE, primary_key=True)
