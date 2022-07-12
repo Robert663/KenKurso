@@ -1,7 +1,6 @@
 from django.db import models
 
 
-
 class Class(models.Model):
     title = models.CharField(max_length=70)
     text = models.TextField()
@@ -11,4 +10,4 @@ class Class(models.Model):
     grade = models.FloatField()
 
 
-    subject_id = models.OneToOneField('subjects.Subject', on_delete=models.CASCADE, primary_key=True)
+    subject = models.OneToOneField('subjects.Subject', on_delete=models.CASCADE)

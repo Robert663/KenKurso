@@ -8,4 +8,4 @@ class Subject(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     duration = models.CharField(max_length=10)
 
-    teacher_id = models.ForeignKey('teachers.Teacher', on_delete=models.SET_NULL)
+    teacher = models.ForeignKey('teachers.Teacher', on_delete=models.SET_NULL, null=True)
