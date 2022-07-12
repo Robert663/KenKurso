@@ -1,4 +1,3 @@
-from pkgutil import read_code
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 
