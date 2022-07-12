@@ -14,7 +14,7 @@ class CourseSerializer(ModelSerializer):
     def create(self, validated_data):
         return Course.objects.create_user(**validated_data)
 
-class UpdateAccountSerializer(ModelSerializer):
+class UpdateCourseSerializer(ModelSerializer):
     class Meta:
         model = Course
         fields = '__all__'
