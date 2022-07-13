@@ -1,20 +1,12 @@
-from django.shortcuts import render
-from rest_framework.generics import ListCreateAPIView, ListAPIView
+from rest_framework import generics
 from rest_framework.views import APIView, Response, status
-from .serializers import UserSerializers, UpdateUserSerializers, LoginUserSerializers
+from .serializers import SuperUserSerializers, UserSerializers, UpdateUserSerializers, LoginUserSerializers
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from .models import User
 
 
-class UserView(ListCreateAPIView):
-
-    queryset = User.objects.all()
-    serializer_class = UserSerializers
-
-
-class ListUser(ListAPIView):
-
+class UserView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializers
 
@@ -23,14 +15,17 @@ class ListUser(ListAPIView):
         return self.queryset.order_by("-date_joined")[0:amount_user]
 
 
-class UpdateUserView(UpdateAPIView):
+class SuperUserView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = SuperUserSerializers
 
+
+class UpdateUserView(generics.UpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UpdateUserSerializers
 
 
 class LoginUserView(APIView):
-
     def post(self, request):
         serializer = LoginUserSerializers(data=request.data)
         serializer.is_valid(raise_exception=True)
