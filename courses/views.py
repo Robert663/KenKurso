@@ -16,17 +16,6 @@ class DetailsCourseView(RetrieveUpdateDestroyAPIView):
     queryset = Course.objects.all()
 
 
-class CreateStudentCourse(APIView):
-    def post(self, request: Request, student_id):
-
-        student = get_object_or_404(Student, pk=student_id)
-        CourseSerializer = CourseSerializer(data=request.data)
-        CourseSerializer.is_valid(raise_exception=True)
-        CourseSerializer.save(student_id=student)
-
-        return Response(CourseSerializer.data, status.HTTP_201_CREATED)
-
-
 class ListStudentCourse(ListAPIView):
     def get(self, request, student_id):
 
