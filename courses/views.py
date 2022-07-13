@@ -1,12 +1,12 @@
 from django.shortcuts import get_object_or_404
-from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView, Response, status, Request
 from .models import Course
 from .serializers import CourseSerializer
 from students.models import Student
 
 
-class ListCourseView(ListAPIView):
+class ListCreateCourseView(ListCreateAPIView):
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
 
