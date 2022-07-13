@@ -17,5 +17,15 @@ class RetrieveUpdateStudents(generics.RetrieveUpdateAPIView):
 class DeactiveStudent(generics.UpdateAPIView):
     queryset = Student.objects.all()
     serializer_class = DeactiveStudentSerializer
+
+
+class ListStudentCourseViews(ListAPIView):
+
+    def get(self, request, course_id):
+
+        course = Student.objects.filter(course_id = course_id ).all()
+        courseSerializer = StudentSerializer(course)
+
+        return Response(courseSerializer.data)
     
     
