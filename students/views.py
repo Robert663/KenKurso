@@ -5,6 +5,9 @@ from courses.models import Course
 from semesters.models import Semester
 from students.serializers import StudentSerializer
 from users.serializers import UserSerializers
+from rest_framework import generics
+from students.models import Student
+from students.serializers import DeactiveStudentSerializer, StudentSerializer
 
 
 class CreateStudent(APIView):
@@ -24,3 +27,17 @@ class CreateStudent(APIView):
         serializer_student.is_valid(raise_exception=True)
         serializer_student.save()
         return Response(serializer_student.data, status=status.HTTP_201_CREATED)
+
+class ListStudents(generics.ListAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
+class RetrieveUpdateStudents(generics.RetrieveUpdateAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
+class DeactiveStudent(generics.UpdateAPIView):
+    queryset = Student.objects.all()
+    serializer_class = DeactiveStudentSerializer

@@ -10,14 +10,22 @@ class StudentSerializer(ModelSerializer):
     class Meta:
         model = Student
         fields = '__all__'
-        read_only_field = ['id']
-
 
     def create(self, validated_data):
         return Student.objects.create_user(**validated_data)
+
 
 class UpdateStudentSerializer(ModelSerializer):
     class Meta:
         model = Student
         fields = '__all__'
-        read_only_fields = ['id']
+
+
+class DeactiveStudentSerializer(ModelSerializer):
+    class Meta:
+        model = Student
+        fields = ['active']
+
+    def update(self, instance, validated_data):
+        validated_data['active'] = False
+        return super().update(instance, validated_data)

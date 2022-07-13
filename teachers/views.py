@@ -1,3 +1,4 @@
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -6,6 +7,9 @@ from semesters.models import Semester
 from students.serializers import StudentSerializer
 from teachers.serializers import TeacherSerializers
 from users.serializers import UserSerializers
+from rest_framework import generics
+from teachers.models import Teacher
+from teachers.serializers import TeacherSerializers
 
 
 class CreateTeacher(APIView):
@@ -18,3 +22,12 @@ class CreateTeacher(APIView):
         serializer_teacher.is_valid(raise_exception=True)
         serializer_teacher.save()
         return Response(serializer_teacher.data, status=status.HTTP_201_CREATED)
+        
+class ListTeacher(generics.ListAPIView):
+    serializer_class = TeacherSerializers
+    queryset = Teacher.objects.all()
+
+class DetailsTeacher(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = TeacherSerializers
+    queryset = Teacher.objects.all()
+
