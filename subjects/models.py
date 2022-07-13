@@ -9,4 +9,3 @@ class Subject(models.Model):
     duration = models.CharField(max_length=10)
 
     teacher = models.ForeignKey('teachers.Teacher', on_delete=models.SET_NULL, null=True)
-    course = models.ForeignKey('courses.Course', on_delete=models.SET_NULL, null=True)

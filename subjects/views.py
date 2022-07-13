@@ -16,14 +16,14 @@ class ListSubjectView(ListAPIView):
 
 
 
-class ListSubjectCourseView(APIView):
+# class ListSubjectCourseView(APIView):
 
-    def get(self, request, course_id):
+#     def get(self, request, course_id):
 
-        course = School_Record.objects.filter(course_id = course_id).all()
-        courseSerializer = SchoolRecordSerializers(course)
+#         course = School_Record.objects.filter(course_id = course_id).all()
+#         courseSerializer = SchoolRecordSerializers(course)
 
-        return Response(courseSerializer.data)
+#         return Response(courseSerializer.data)
 
 
 class ListSubjectTeacherView(APIView):
