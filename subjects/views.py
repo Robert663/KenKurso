@@ -3,6 +3,7 @@ from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDe
 from rest_framework.views import APIView, Response, status
 from .models import Subject
 from .serializers import SubjectSerializers
+from semesters.models import Semester
 
 
 class ListSubjectView(ListAPIView):
@@ -16,14 +17,17 @@ class ListSubjectView(ListAPIView):
 
 
 
-# class ListSubjectCourseView(APIView):
+class ListSubjectCourseView(APIView):
 
-#     def get(self, request, course_id):
-
-#         course = School_Record.objects.filter(course_id = course_id).all()
-#         courseSerializer = SchoolRecordSerializers(course)
-
-#         return Response(courseSerializer.data)
+    def get(self, request, course_id):
+        subject_data = []
+        semesters = Semester.objects.filter(course_id = course_id).all()
+        for item in semesters:
+            for subject in item.subjects_id:
+                subject_data.append(subject)
+        
+        subjectsSerializer = SubjectSerializers(subject_data,many=True)
+        return Response(subjectsSerializer.data)
 
 
 class ListSubjectTeacherView(APIView):
