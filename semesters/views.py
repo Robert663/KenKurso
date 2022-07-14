@@ -27,7 +27,7 @@ class SemestersCourseView(APIView):
 
 class SemesterView(generics.ListCreateAPIView):
     queryset=Semester.objects.all()
-    serializer_class= SemesterSerializers
+    serializer_class=SemesterSerializers
     def get_queryset(self):
         semester = self.kwargs["semester_id"]
         return self.queryset.filter(id=semester)

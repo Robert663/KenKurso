@@ -10,7 +10,6 @@ class CourseSerializer(ModelSerializer):
         fields = '__all__'
         read_only_field = ['id', 'created_at']
 
-
     def create(self, validated_data):
         return Course.objects.create_user(**validated_data)
 
