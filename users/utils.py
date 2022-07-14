@@ -3,7 +3,7 @@ from django.utils import timezone
 
 
 class CustomUserManager(BaseUserManager):
-    def _create_user(self, email, password, is_staff, is_admin, **extra_fields):
+    def _create_user(self, email, password, is_staff, is_superuser, **extra_fields):
         now = timezone.now()
         if not email:
             raise ValueError("email precisa ser passado")
@@ -12,7 +12,7 @@ class CustomUserManager(BaseUserManager):
 
         user = self.model(
             email=email,
-            is_admin=is_admin,
+            is_superuser=is_superuser,
             is_staff=is_staff,
             updated_at=now,
             **extra_fields

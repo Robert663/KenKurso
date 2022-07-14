@@ -18,16 +18,14 @@ class SemestersCourseView(APIView):
         serializer.save(course_id=course.id)
         return Response(serializer.data, status.HTTP_201_CREATED)
     def get(self, request, course_id):
-        try:
-            semester = Semester.objects.get(course_id=course_id)
-            serializer = SemesterSerializers(semester)
+        # try:
+            semester = Semester.objects.filter(course_id=course_id).all()
+            serializer = SemesterSerializers(semester, many=True)
             return Response(serializer.data)
-        except:
-            return Response({"message":"Course not found"}, status.HTTP_404_NOT_FOUND)
+        # except:
+            # return Response({"message":"Course not found"}, status.HTTP_404_NOT_FOUND)
 
-class SemesterView(generics.ListCreateAPIView):
+class SemesterView(generics.RetrieveAPIView):
     queryset=Semester.objects.all()
-    serializer_class= SemesterSerializers
-    def get_queryset(self):
-        semester = self.kwargs["semester_id"]
-        return self.queryset.filter(id=semester)
+    serializer_class=SemesterSerializers
+  
