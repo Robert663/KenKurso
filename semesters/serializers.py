@@ -6,5 +6,4 @@ class SemesterSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Semester
-        fields = "__all__"
-        read_only_fields = ["id"]
+        fields = ["semester", "course_id", "subjects_id"]
