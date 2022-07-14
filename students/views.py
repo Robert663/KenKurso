@@ -22,7 +22,7 @@ class CreateStudent(APIView):
         serializer_user.is_valid(raise_exception=True)
         user = serializer_user.save()
 
-        student_data = {user, semester, course}
+        student_data = {"user":user.id, "semester": semester.id, "course": course.id}
         serializer_student = StudentSerializer(data=student_data)
         serializer_student.is_valid(raise_exception=True)
         serializer_student.save()
@@ -44,12 +44,12 @@ class DeactiveStudent(generics.UpdateAPIView):
 
 
 
-class ListStudentCourseViews(ListAPIView):
+class ListStudentCourseViews(APIView):
 
     def get(self, request, course_id):
 
         course = Student.objects.filter(course_id = course_id ).all()
-        courseSerializer = StudentSerializer(course)
+        courseSerializer = StudentSerializer(course, many=True)
 
         return Response(courseSerializer.data)
     
