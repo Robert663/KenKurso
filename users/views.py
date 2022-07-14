@@ -6,6 +6,11 @@ from rest_framework.authtoken.models import Token
 from .models import User
 
 
+class UserAllView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializers
+
+
 class UserView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializers
@@ -18,7 +23,7 @@ class UserView(generics.ListAPIView):
 class SuperUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = SuperUserSerializers
-
+    
 
 class UpdateUserView(generics.UpdateAPIView):
     queryset = User.objects.all()
