@@ -7,5 +7,4 @@ class Subject(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     duration = models.CharField(max_length=10)
-
     teacher = models.ForeignKey('teachers.Teacher', on_delete=models.SET_NULL, null=True)

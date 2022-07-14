@@ -17,8 +17,8 @@ class CreateTeacher(APIView):
         serializer_user = UserSerializers(data=request.data)
         serializer_user.is_valid(raise_exception=True)
         user = serializer_user.save(is_staff=True)
-
-        serializer_teacher = TeacherSerializers(data=user)
+        data_user={"user": user.id}
+        serializer_teacher = TeacherSerializers(data=data_user)
         serializer_teacher.is_valid(raise_exception=True)
         serializer_teacher.save()
         return Response(serializer_teacher.data, status=status.HTTP_201_CREATED)
