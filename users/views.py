@@ -11,21 +11,12 @@ class UserAllView(generics.ListAPIView):
     serializer_class = UserSerializers
 
 
-class UserView(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializers
-
-    def get_queryset(self):
-        amount_user = self.kwargs["num"]
-        return self.queryset.order_by("-date_joined")[0:amount_user]
-
-
 class SuperUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = SuperUserSerializers
     
 
-class UpdateUserView(generics.UpdateAPIView):
+class RetrieveUpdateUserView(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UpdateUserSerializers
 
