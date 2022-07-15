@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView, Response, status
-
 from school_records.models import School_Record
 from school_records.serializers import SchoolRecordSerializers
 from semesters.serializers import SemesterSerializers
+from teachers.models import Teacher
 from .models import Subject
 from .serializers import SubjectSerializers
 from semesters.models import Semester
@@ -45,11 +45,15 @@ class ListSubjectCourseView(APIView):
 class ListSubjectTeacherView(APIView):
 
     def get(self, request, teacher_id):
+        try:
+             Teacher.objects.get(user=teacher_id)
+        except:
+            return Response({"message":"Teacher not found"},status.HTTP_404_NOT_FOUND)
 
-        teacher = School_Record.objects.filter(teacher_id = teacher_id).all()
-        teacherSerializer = SchoolRecordSerializers(teacher, many=True)
+        teacher_subjects = Subject.objects.filter(teacher_id = teacher_id).all()
+        teacher_serializer = SubjectSerializers(teacher_subjects, many=True)
 
-        return Response(teacherSerializer.data)
+        return Response(teacher_serializer.data)
 
 
 class CreateSubjectView(CreateAPIView):
