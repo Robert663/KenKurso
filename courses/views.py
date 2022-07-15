@@ -4,7 +4,7 @@ from rest_framework.views import APIView, Response, status, Request
 from .models import Course
 from .serializers import CourseSerializer
 from students.models import Student
-
+from students.serializers import StudentSerializer
 
 class ListCreateCourseView(ListCreateAPIView):
     serializer_class = CourseSerializer
@@ -19,7 +19,8 @@ class DetailsCourseView(RetrieveUpdateDestroyAPIView):
 class ListStudentCourse(ListAPIView):
     def get(self, request, student_id):
 
-        student = Course.objects.filter(student_id=student_id).all()
-        studentSerializer = CourseSerializer(student)
+        student = Student.objects.filter(course_id=student_id).all()
 
-        return Response(studentSerializer.data)
+        student_serializer = StudentSerializer(student, many=True)
+
+        return Response(student_serializer.data)
