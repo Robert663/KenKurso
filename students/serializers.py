@@ -17,13 +17,14 @@ class StudentDisplaySerializer(ModelSerializer):
         fields = ["active","user","semester"]
         depth=0
 class StudentSerializer(ModelSerializer):
-    user = UserSerializers(read_only=True)
+
     class Meta:
         model = Student
-        fields = '__all__'
-        depth=0
+        fields = '__all__' 
+
 
     def create(self, validated_data):
+        print(validated_data)
         return Student.objects.create(**validated_data)
 
 

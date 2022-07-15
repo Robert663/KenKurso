@@ -12,17 +12,27 @@ from students.serializers import DeactiveStudentSerializer, StudentSerializer
 
 class CreateStudent(APIView):
     def post(self, request):
-        course_id = request.data.pop('course')
-        course = Course.objects.get(id=course_id)
-
-        semester_id = request.data.pop('semester')
-        semester = Semester.objects.get(id=semester_id)
+        try:
+            course_id = request.data.pop('course')
+            course = Course.objects.get(id=course_id)
+        except Course.DoesNotExist:
+            return Response(
+                {"message": "Course not found"}, status.HTTP_404_NOT_FOUND
+            )
+        try:
+            semester_id = request.data.pop('semester')
+            semester = Semester.objects.get(id=semester_id)
+        except Semester.DoesNotExist:
+            return Response(
+                {"message": "Semester not found"}, status.HTTP_404_NOT_FOUND
+            )
 
         serializer_user = UserSerializers(data=request.data)
         serializer_user.is_valid(raise_exception=True)
         user = serializer_user.save()
-
+        
         student_data = {"user":user.id, "semester": semester.id, "course": course.id}
+        print(student_data)
         serializer_student = StudentSerializer(data=student_data)
         serializer_student.is_valid(raise_exception=True)
         serializer_student.save()
