@@ -12,7 +12,7 @@ class StudentSerializer(ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        return Student.objects.create_user(**validated_data)
+        return Student.objects.create(**validated_data)
 
 
 class UpdateStudentSerializer(ModelSerializer):
