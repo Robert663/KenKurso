@@ -3,6 +3,8 @@ from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDe
 from rest_framework.views import APIView, Response, status
 
 from school_records.models import School_Record
+from school_records.serializers import SchoolRecordSerializers
+from semesters.serializers import SemesterSerializers
 from .models import Subject
 from .serializers import SubjectSerializers
 from semesters.models import Semester
@@ -26,18 +28,17 @@ class ListSubjectsView(ListAPIView):
 class ListSubjectCourseView(APIView):
 
     def get(self, request, course_id):
-        subject_data = []
+        # subject_data = []
         try:
             Course.objects.get(id=course_id)
         except:
             return Response({"message":"Course not found"}, status.HTTP_404_NOT_FOUND)
         semesters = Semester.objects.filter(course_id = course_id).all()
-        for item in semesters:
-            for subject in item.subjects_id:
-                subject_data.append(subject)
-               
-        
-        subjectsSerializer = SubjectSerializers(subject_data,many=True)
+        # print("TEST SUBJECT",semesters[1])
+        # for item in semesters:
+        #     for subject in item.subjects_id:
+        #         subject_data.append(subject)
+        subjectsSerializer = SemesterSerializers(semesters, many=True)
         return Response(subjectsSerializer.data)
 
 
@@ -46,7 +47,7 @@ class ListSubjectTeacherView(APIView):
     def get(self, request, teacher_id):
 
         teacher = School_Record.objects.filter(teacher_id = teacher_id).all()
-        teacherSerializer = SchoolRecordSerializers(teacher)
+        teacherSerializer = SchoolRecordSerializers(teacher, many=True)
 
         return Response(teacherSerializer.data)
 
