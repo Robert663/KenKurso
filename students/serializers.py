@@ -4,9 +4,7 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from courses import models
 from semesters.serializers import StudentSemesterSerializer
-
 from users.serializers import UserSerializers
-
 from .models import Student
 
 class StudentDisplaySerializer(ModelSerializer):
@@ -16,6 +14,7 @@ class StudentDisplaySerializer(ModelSerializer):
         model = Student
         fields = ["active","user","semester"]
         depth=0
+
 class StudentSerializer(ModelSerializer):
 
     class Meta:

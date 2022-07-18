@@ -8,6 +8,7 @@ from users.serializers import UserSerializers
 from rest_framework import generics
 from students.models import Student
 from students.serializers import DeactiveStudentSerializer, StudentSerializer
+from django.shortcuts import get_object_or_404
 
 
 class CreateStudent(APIView):
@@ -34,9 +35,11 @@ class CreateStudent(APIView):
         student_data = {"user":user.id, "semester": semester.id, "course": course.id}
         print(student_data)
         serializer_student = StudentSerializer(data=student_data)
+
         serializer_student.is_valid(raise_exception=True)
+
         serializer_student.save()
-        return Response(serializer_student.data, status=status.HTTP_201_CREATED)
+        return Response(serializer_student.data, status.HTTP_201_CREATED)
 
 class ListStudents(generics.ListAPIView):
     queryset = Student.objects.all()
