@@ -31,11 +31,11 @@ class CreateStudent(APIView):
         serializer_user.is_valid(raise_exception=True)
         user = serializer_user.save()
         
-        student_data = {"user":user.id, "semester": semester.id, "course": course.id}
+        student_data = {"semester": semester.id, "course": course.id}
         print(student_data)
         serializer_student = StudentSerializer(data=student_data)
         serializer_student.is_valid(raise_exception=True)
-        serializer_student.save()
+        serializer_student.save(user=user, course=course, semester=semester)
         return Response(serializer_student.data, status=status.HTTP_201_CREATED)
 
 class ListStudents(generics.ListAPIView):
