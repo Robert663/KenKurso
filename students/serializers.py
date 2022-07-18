@@ -4,9 +4,7 @@ from courses import models
 from courses.serializers import CourseSerializer
 
 from semesters.serializers import StudentSemesterSerializer
-
 from users.serializers import UserSerializers
-
 from .models import Student
 
 
