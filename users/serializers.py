@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import User
+from django.contrib.auth.hashers import make_password
 
 
 class UserSerializers(serializers.ModelSerializer):
@@ -39,5 +40,17 @@ class UpdateUserSerializers(serializers.ModelSerializer):
         model = User
         fields = "__all__"
         read_only_fields = ["id", 'date_joined', "updated_at"]
-
+        
         extra_kwargs = {"password": {"write_only": True}}
+
+    def update(self, instance: User, validated_data):
+        non_editable_keys = ()
+        for key, value in validated_data.items():
+            if key in non_editable_keys:
+                raise KeyError
+            setattr(instance, key, value)
+        if "password" in validated_data:
+            hashed_password = make_password(validated_data["password"])
+            setattr(instance, "password", hashed_password)
+        instance.save()
+        return instance

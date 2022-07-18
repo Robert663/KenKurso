@@ -13,25 +13,30 @@ from django.shortcuts import get_object_or_404
 
 class CreateStudent(APIView):
     def post(self, request):
-        course_id = request.data.pop('course')
-        course = get_object_or_404(Course, id=course_id)
-
-        semester_id = request.data.pop('semester')
-        semester = get_object_or_404(Semester, id=semester_id)
+        try:
+            course_id = request.data.pop('course')
+            course = Course.objects.get(id=course_id)
+        except Course.DoesNotExist:
+            return Response(
+                {"message": "Course not found"}, status.HTTP_404_NOT_FOUND
+            )
+        try:
+            semester_id = request.data.pop('semester')
+            semester = Semester.objects.get(id=semester_id)
+        except Semester.DoesNotExist:
+            return Response(
+                {"message": "Semester not found"}, status.HTTP_404_NOT_FOUND
+            )
 
         serializer_user = UserSerializers(data=request.data)
         serializer_user.is_valid(raise_exception=True)
         user = serializer_user.save()
-        print("VEJA SEU CEGO 0><<",type(user))
-
-        student_data = {"user_id":user.id, "semester": semester.id, "course": course.id}
-        print("VEJA SEU CEGO 1><<",student_data)
-
+        
+        student_data = {"user":user.id, "semester": semester.id, "course": course.id}
+        print(student_data)
         serializer_student = StudentSerializer(data=student_data)
-        print("VEJA SEU CEGo 2><<",student_data)
 
         serializer_student.is_valid(raise_exception=True)
-        print("VEJA SEU CEGO 3><<",student_data)
 
         serializer_student.save()
         return Response(serializer_student.data, status.HTTP_201_CREATED)
