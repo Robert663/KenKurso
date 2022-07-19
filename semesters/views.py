@@ -1,9 +1,6 @@
-from urllib import response
 from rest_framework import generics
 from rest_framework.views import APIView, Response, status
-from yaml import serialize
 from courses.models import Course
-
 from semesters.models import Semester
 from semesters.serializers import SemesterSerializers
 

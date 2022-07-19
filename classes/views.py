@@ -1,6 +1,5 @@
-from ast import Raise
-from django.shortcuts import get_object_or_404, render
-from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
+from django.shortcuts import get_object_or_404
+from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView, Response, status, Request
 from .models import Class
 from .serializers import ClassSerializer, UpdateClassSerializer

@@ -1,8 +1,6 @@
-from django.shortcuts import get_object_or_404, render
-from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
+from django.shortcuts import get_object_or_404
+from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView, Response, status, Request
-
-import school_records
 from .models import School_Record
 from .serializers import SchoolRecordSerializers
 from students.models import Student

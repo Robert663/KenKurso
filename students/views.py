@@ -8,7 +8,6 @@ from users.serializers import UserSerializers
 from rest_framework import generics
 from students.models import Student
 from students.serializers import DeactiveStudentSerializer, StudentSerializer
-from django.shortcuts import get_object_or_404
 
 
 class CreateStudent(APIView):

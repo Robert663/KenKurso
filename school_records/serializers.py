@@ -1,5 +1,4 @@
 from rest_framework import serializers
-
 from students.serializers import StudentSerializer
 from .models import School_Record
 
