@@ -6,13 +6,13 @@ from .models import Subject
 from .serializers import SubjectSerializers
 from semesters.models import Semester
 from courses.models import Course
-
+from rest_framework.authentication import TokenAuthentication
+from .permissions import subjectPermission
 
 class ListSubjectsView(ListAPIView):
 
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializers
-
 
 class ListSubjectCourseView(APIView):
 
@@ -41,12 +41,16 @@ class ListSubjectTeacherView(APIView):
 
 
 class CreateSubjectView(CreateAPIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[subjectPermission]
 
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializers
 
 
 class SubjectView(RetrieveUpdateDestroyAPIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[subjectPermission]
 
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializers
