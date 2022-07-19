@@ -10,14 +10,14 @@ from .permissions import CoursePermission
 
 class ListCreateCourseView(ListCreateAPIView):
     authentication_classes=[TokenAuthentication]
-    permission_classes=[coordinatorPermission]  
+    permission_classes=[CoursePermission]  
 
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
 
 class DetailsCourseView(RetrieveUpdateDestroyAPIView):
     authentication_classes=[TokenAuthentication]
-    permission_classes=[coordinatorPermission]  
+    permission_classes=[CoursePermission]  
     
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
