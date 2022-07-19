@@ -4,6 +4,8 @@ from .serializers import SuperUserSerializers, UserSerializers, UpdateUserSerial
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from .models import User
+from rest_framework.authentication import TokenAuthentication
+from .permissions import coordinatorPermission
 
 
 class UserAllView(generics.ListAPIView):
@@ -12,11 +14,17 @@ class UserAllView(generics.ListAPIView):
 
 
 class SuperUserView(generics.CreateAPIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[coordinatorPermission]    
+
     queryset = User.objects.all()
     serializer_class = SuperUserSerializers
     
 
 class RetrieveUpdateUserView(generics.RetrieveUpdateAPIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[coordinatorPermission]    
+    
     queryset = User.objects.all()
     serializer_class = UpdateUserSerializers
 
