@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'classes',
     'courses',
     'school_records',
@@ -105,7 +106,7 @@ else:
             "NAME": os.environ.get("POSTGRES_DB"),
             "USER": os.environ.get("POSTGRES_USER"),
             "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
-            "HOST": "db",
+            "HOST": "localhost",
             "PORT": 5432,
         }
 
@@ -118,7 +119,7 @@ else:
         db_from_env = dj_database_url.config(
             default=DATABASE_URL, conn_max_age=500, ssl_require=True
         )
-    DATABASES['default'].update(db_from_env)
+        DATABASES['default'].update(db_from_env)
     DEBUG = False
 
 
