@@ -1,26 +1,29 @@
-from django.shortcuts import get_object_or_404, render
-from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
+from django.shortcuts import get_object_or_404
+from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView, Response, status, Request
-
-import school_records
 from .models import School_Record
+from .permissions import SuperUserPermission, StudentPermission
 from .serializers import SchoolRecordSerializers
+from rest_framework.authentication import TokenAuthentication
 from students.models import Student
 
 class ListRecord(ListAPIView):
-
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[SuperUserPermission]  
     serializer_class = SchoolRecordSerializers
     queryset = School_Record.objects.all()
 
 
 class DetailsRecord(RetrieveUpdateDestroyAPIView):
-
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[StudentPermission]  
     serializer_class = SchoolRecordSerializers
     queryset = School_Record.objects.all()
 
 
 class CreateRecordStudent(APIView):
-
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[StudentPermission]  
     def post(self, request: Request, student_id):
 
         student = get_object_or_404(Student, pk=student_id)
@@ -32,7 +35,8 @@ class CreateRecordStudent(APIView):
 
 
 class ListRecordStudent(ListAPIView):
-
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[StudentPermission]  
     def get(self, request, student_id):
 
         student = School_Record.objects.filter(student_id = student_id ).all()
@@ -42,7 +46,8 @@ class ListRecordStudent(ListAPIView):
 
 
 class ListRecordSubject(APIView):
-
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[SuperUserPermission] 
     def get(self, request, subject_id):
 
         subject = School_Record.objects.filter(subject_id = subject_id ).all()

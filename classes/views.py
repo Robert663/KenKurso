@@ -1,18 +1,21 @@
-from ast import Raise
-from django.shortcuts import get_object_or_404, render
-from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
+from django.shortcuts import get_object_or_404
+from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView, Response, status, Request
 from .models import Class
 from .serializers import ClassSerializer, UpdateClassSerializer
 from subjects.models import Subject
 from .mixins import SerializerByMethodMixin
-
+from rest_framework.authentication import TokenAuthentication
+from .permissions import ClassesPermission
 
 class ListClassView(ListAPIView):
     queryset = Class.objects.all()
     serializer_class = ClassSerializer
      
 class ListCreateClassSubjectView(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[ClassesPermission]
+
     def post(self, request: Request, subject_id):
         subject = get_object_or_404(Subject, id=subject_id)
         subjectSerializer = ClassSerializer(data=request.data)
@@ -27,8 +30,9 @@ class ListCreateClassSubjectView(APIView):
         subjectSerializer = ClassSerializer(subject, many=True)
         return Response(subjectSerializer.data)
 
-
 class ClassView(SerializerByMethodMixin, RetrieveUpdateDestroyAPIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[ClassesPermission]    
 
     queryset = Class.objects.all()
     serializer_map ={

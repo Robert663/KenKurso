@@ -8,10 +8,13 @@ from users.serializers import UserSerializers
 from rest_framework import generics
 from students.models import Student
 from students.serializers import DeactiveStudentSerializer, StudentSerializer
-from django.shortcuts import get_object_or_404
-
+from rest_framework.authentication import TokenAuthentication
+from .permissions import StudentPermission
 
 class CreateStudent(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[StudentPermission]   
+
     def post(self, request):
         try:
             course_id = request.data.pop('course')
@@ -46,11 +49,17 @@ class ListStudents(generics.ListAPIView):
 
 
 class RetrieveUpdateStudents(generics.RetrieveUpdateAPIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[StudentPermission]  
+
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
 
 class DeactiveStudent(generics.UpdateAPIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[StudentPermission]  
+    
     queryset = Student.objects.all()
     serializer_class = DeactiveStudentSerializer
 
