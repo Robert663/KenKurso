@@ -2,20 +2,17 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from courses.models import Course
-from semesters.models import Semester
-from students.serializers import StudentSerializer
 from teachers.serializers import TeacherSerializers
 from users.serializers import UserSerializers
 from rest_framework import generics
 from teachers.models import Teacher
 from teachers.serializers import TeacherSerializers
 from rest_framework.authentication import TokenAuthentication
-from .permissions import teacherPermission
+from .permissions import TeacherPermission
 
 class CreateTeacher(APIView):
     authentication_classes=[TokenAuthentication]
-    permission_classes=[teacherPermission]   
+    permission_classes=[TeacherPermission]   
 
     def post(self, request):
         serializer_user = UserSerializers(data=request.data)
@@ -33,7 +30,7 @@ class ListTeacher(generics.ListAPIView):
 
 class DetailsTeacher(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes=[TokenAuthentication]
-    permission_classes=[teacherPermission]   
+    permission_classes=[TeacherPermission]   
 
     serializer_class = TeacherSerializers
     queryset = Teacher.objects.all()
