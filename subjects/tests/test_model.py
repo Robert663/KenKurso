@@ -1,8 +1,5 @@
 from django.test import TestCase
-
-from users.models import User
 from ..models import Subject
-from teachers.models import Teacher
 
 class SubjectModelTest(TestCase):
     @classmethod

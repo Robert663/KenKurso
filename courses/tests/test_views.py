@@ -1,5 +1,3 @@
-from itertools import product
-from urllib import response
 from rest_framework.test import APITestCase
 from ..models import Course
 from ..serializers import CourseSerializer
