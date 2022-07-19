@@ -19,7 +19,6 @@ class SemestersCourseView(APIView):
         serializer.save(course_id=course.id)
         return Response(serializer.data, status.HTTP_201_CREATED)
     def get(self, request, course_id):
-            
             semester = Semester.objects.filter(course_id=course_id).all()
             serializer = SemesterSerializers(semester, many=True)
             return Response(serializer.data)

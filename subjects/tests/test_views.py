@@ -1,5 +1,4 @@
 from rest_framework.test import APITestCase
-
 from ..serializers import SubjectSerializers
 from ..models import Subject
 class SubjectModelTest(APITestCase):

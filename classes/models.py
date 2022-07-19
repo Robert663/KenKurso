@@ -8,6 +8,4 @@ class Class(models.Model):
     graded = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     grade = models.FloatField()
-
-
-    subject = models.OneToOneField('subjects.Subject', on_delete=models.CASCADE)
+    subject = models.ForeignKey('subjects.Subject', on_delete=models.CASCADE)

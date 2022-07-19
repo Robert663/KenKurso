@@ -11,8 +11,8 @@ from rest_framework.authentication import TokenAuthentication
 from .permissions import TeacherPermission
 
 class CreateTeacher(APIView):
-    authentication_classes=[TokenAuthentication]
-    permission_classes=[TeacherPermission]   
+    # authentication_classes=[TokenAuthentication]
+    # permission_classes=[TeacherPermission]   
 
     def post(self, request):
         serializer_user = UserSerializers(data=request.data)

@@ -1,6 +1,5 @@
-from django.shortcuts import get_object_or_404
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.views import APIView, Response, status, Request
+from rest_framework.views import  Response
 from .models import Course
 from .serializers import CourseSerializer
 from students.models import Student
