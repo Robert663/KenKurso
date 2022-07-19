@@ -18,6 +18,8 @@ class CoursesModelTest(TestCase):
         self.assertEqual(self.course.description, self.description)
         self.assertEqual(self.course.duration, self.duration)
         self.assertEqual(self.course.inscriptions, 0)
+        self.assertTrue(self.course.created_at)
+        self.assertTrue(self.course.updated_at)
         
     def test_name_max_length(self):
         course = Course.objects.get(id=1)
