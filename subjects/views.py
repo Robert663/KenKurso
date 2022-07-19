@@ -9,35 +9,22 @@ from .models import Subject
 from .serializers import SubjectSerializers
 from semesters.models import Semester
 from courses.models import Course
-
-# class ListSubjectView(ListAPIView):
-
-#     queryset = Subject.objects.all()
-#     serializer_class = SubjectSerializers
-
-#     def get_queryset(self):
-#         amount_subject = self.kwargs["num"]
-#         return self.queryset.order_by("-date_joined")[0:amount_subject]
+from rest_framework.authentication import TokenAuthentication
+from .permissions import subjectPermission
 
 class ListSubjectsView(ListAPIView):
 
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializers
 
-
 class ListSubjectCourseView(APIView):
 
     def get(self, request, course_id):
-        # subject_data = []
         try:
             Course.objects.get(id=course_id)
         except:
             return Response({"message":"Course not found"}, status.HTTP_404_NOT_FOUND)
         semesters = Semester.objects.filter(course_id = course_id).all()
-        # print("TEST SUBJECT",semesters[1])
-        # for item in semesters:
-        #     for subject in item.subjects_id:
-        #         subject_data.append(subject)
         subjectsSerializer = SemesterSerializers(semesters, many=True)
         return Response(subjectsSerializer.data)
 
@@ -57,12 +44,16 @@ class ListSubjectTeacherView(APIView):
 
 
 class CreateSubjectView(CreateAPIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[subjectPermission]
 
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializers
 
 
 class SubjectView(RetrieveUpdateDestroyAPIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[subjectPermission]
 
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializers
