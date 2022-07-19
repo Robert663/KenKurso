@@ -5,16 +5,22 @@ from .models import Course
 from .serializers import CourseSerializer
 from students.models import Student
 from students.serializers import StudentDisplaySerializer
+from rest_framework.authentication import TokenAuthentication
+from .permissions import CoursePermission
 
 class ListCreateCourseView(ListCreateAPIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[coordinatorPermission]  
+
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
-
 
 class DetailsCourseView(RetrieveUpdateDestroyAPIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[coordinatorPermission]  
+    
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
-
 
 class ListStudentCourse(ListAPIView):
     def get(self, request, course_id):
