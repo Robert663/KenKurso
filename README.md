@@ -25,45 +25,4 @@ precise repetir a aula diversas vezes até entender aquele trecho que foi mais d
    Doc KenKurso API
 </h1>
 
-<h3>API:</h3>
-
-<h2>Users</h2>
-
-```bash
- POST baseURL/users/coordination/
-```
-
-```javascript
-  {
-   "email": string,
-   "full_name": string,
-   "username": string || None,
-   "password": string
-   }
-```
-
-```bash
-  baseURL/users/coordination/
-```
-
-```javascript
-  {
-   "email": string,
-   "full_name": string,
-   "username": string || None,
-   "password": string
-   }
-```
-
-```bash
- POST baseURL/users/coordination/
-```
-
-```javascript
-  {
-   "email": string,
-   "full_name": string,
-   "username": string || None,
-   "password": string
-   }
-```
+https://app.swaggerhub.com/apis/lucasdutradev/KenKurso/1.0.0
